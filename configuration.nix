@@ -38,12 +38,8 @@
 
   # Enable the X11 windowing system.
   services.xserver = {
-    enable = true; displayManager.lightdm.enable = true;
-    desktopManager = { cinnamon.enable = true; };
-  };
-  
-  services = {
-    displayManager.defaultSession = "cinnamon";
+    enable = true; displayManager.gdm.enable = true;
+    desktopManager = { gnome.enable = true; };
   };
 
   # Configure keymap in X11
@@ -80,15 +76,26 @@
   environment.systemPackages = with pkgs; [
     neovim wget firefox telegram-desktop xclip go
     steam git neofetch heroic tree chromium pfetch
-    # Cinnamon stuff right over here
-    cinnamon-common
-    cinnamon-control-center
-    cinnamon-desktop
-    cinnamon-menus
-    cinnamon-settings-daemon
-    cinnamon-session
   ];
   
+  # Disable some unneeded stuff that come pre-installed with gnome
+  environment.gnome.excludePackages = (with pkgs; [
+    gnome-tour
+    gedit # text editor
+  ]) ++ (with pkgs.gnome; [
+    cheese # webcam tool
+    gnome-music
+    epiphany # web browser
+    geary # email reader
+    evince # document viewer
+    gnome-characters
+    totem # video player
+    tali # poker game
+    iagno # go game
+    hitori # sudoku game
+    atomix # puzzle game
+  ]);
+
   # It makes steam work
   programs.steam = {
     enable = true;
