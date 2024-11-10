@@ -78,7 +78,7 @@
     steam git neofetch heroic tree chromium pfetch
   ];
   
-  # Disable some unneeded stuff that come pre-installed with gnome
+  # Disable some unneeded stuff that comes pre-installed with gnome
   environment.gnome.excludePackages = (with pkgs; [
     gnome-tour
     gedit # text editor
