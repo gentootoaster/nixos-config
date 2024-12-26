@@ -7,9 +7,7 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./nvidia.nix
-      ./zsh.nix
+      ./hardware-configuration.nix     
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -64,7 +62,7 @@
   nixpkgs.config.allowUnfree = true;
   
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.sissyfemboy = {
+  users.users.ecco = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
@@ -74,17 +72,28 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    neovim wget firefox telegram-desktop xclip go
-    steam git neofetch heroic tree chromium pfetch
+    wget git telegram-desktop wl-clipboard tree nitch neofetch python312
+    openvpn steam chromium firefox kitty cava spotify discord vscode vim
+    # Gnome extensions
+    gnomeExtensions.blur-my-shell
+    gnomeExtensions.space-bar
+    gnomeExtensions.rounded-window-corners-reborn
+    gnomeExtensions.media-controls
+    gnomeExtensions.user-themes
+    # Themes
+    kitty-themes
+    gruvbox-plus-icons
+    gruvbox-gtk-theme 
   ];
   
-  # Disable some unneeded stuff that comes pre-installed with gnome
+  # Disable some stuff that comes pre-installed with gnome
   environment.gnome.excludePackages = (with pkgs; [
     gnome-tour
     gedit # text editor
-  ]) ++ (with pkgs.gnome; [
     cheese # webcam tool
     gnome-music
+    gnome-console
+    snapshot # another webcam tool
     epiphany # web browser
     geary # email reader
     evince # document viewer
@@ -96,10 +105,11 @@
     atomix # puzzle game
   ]);
 
-  # It makes steam work
-  programs.steam = {
-    enable = true;
-  };
+  # Enable steam for gaming :D
+  programs.steam.enable = true;
+  
+  # Disable nano(It is literally desinged by satan)
+  programs.nano.enable = false;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -142,7 +152,7 @@
   # and migrated your data accordingly.
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-  system.stateVersion = "24.05"; # Did you read the comment?
+  system.stateVersion = "24.11"; # Did you read the comment?
 
 }
 
